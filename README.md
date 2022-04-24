@@ -12,8 +12,9 @@ Just search for `maxcutlyp.dotenv-autocomplete` in the extensions panel, and cli
 
 1. Install `vsce` with `npm install -g vsce`
 2. Clone this repo with `git clone https://github.com/maxcutlyp/dotenv-autocomplete`
-3. Run `vsce package` - this will generate a file ending in .vsix
-4. Drag the generated file into the Extensions panel in VSCode (or run `code --install-extension <file-name>.vsix`)
+3. `cd` into the newly created folder and run `npm install` to install all the necessary packages for the extension to build
+4. Run `vsce package` - this will generate a file ending in .vsix
+5. Drag the generated file into the Extensions panel in VSCode (or run `code --install-extension <file-name>.vsix`)
 
 ## Requirements
 

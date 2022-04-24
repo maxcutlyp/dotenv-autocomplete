@@ -1,5 +1,8 @@
 # Change Log
 
+## v1.5.1
+- Added the `npm install` step to the build instructions in the readme
+
 ## v1.5.0
 - Transferred ownership to [maxcutlyp](https://github.com/maxcutlyp)
 
