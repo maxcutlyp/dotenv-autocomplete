@@ -2,7 +2,7 @@
 	"name": "dotenv-autocomplete",
 	"displayName": "dotenv-autocomplete",
 	"description": "A VSCode extension that autocompletes process.env variables from .env files",
-	"version": "1.5.0",
+	"version": "1.5.1",
 	"publisher": "maxcutlyp",
 	"repository": {
 		"type": "git",
