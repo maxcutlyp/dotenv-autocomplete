@@ -1,4 +1,4 @@
-# env-autocomplete
+# dotenv-autocomplete
 
 This extension provides auto-completion to any `process.env` mentions inside a JS/TS file, from environment variables declared in `.env.*` files at the root of your project.
 
@@ -6,12 +6,12 @@ This extension provides auto-completion to any `process.env` mentions inside a J
 
 ### From the Extension Marketplace
 
-Just search for `jpruliere.env-autocomplete` in the extensions panel, and click install.
+Just search for `maxcutlyp.dotenv-autocomplete` in the extensions panel, and click install.
 
 ### From Source
 
 1. Install `vsce` with `npm install -g vsce`
-2. Clone this repo with `git clone https://github.com/jpruliere/env-autocomplete`
+2. Clone this repo with `git clone https://github.com/maxcutlyp/dotenv-autocomplete`
 3. Run `vsce package` - this will generate a file ending in .vsix
 4. Drag the generated file into the Extensions panel in VSCode (or run `code --install-extension <file-name>.vsix`)
 

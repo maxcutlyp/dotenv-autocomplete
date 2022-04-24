@@ -1,12 +1,12 @@
 {
-	"name": "env-autocomplete",
-	"displayName": "env-autocomplete",
-	"description": "Searches your repo for a .env file, parses it and autocompletes process.env mentions with every available variable",
-	"version": "1.4.0",
-	"publisher": "jpruliere",
+	"name": "dotenv-autocomplete",
+	"displayName": "dotenv-autocomplete",
+	"description": "A VSCode extension that autocompletes process.env variables from .env files",
+	"version": "1.5.0",
+	"publisher": "maxcutlyp",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/jpruliere/env-autocomplete"
+		"url": "https://github.com/maxcutlyp/dotenv-autocomplete"
 	},
 	"engines": {
 		"vscode": "^1.65.0"

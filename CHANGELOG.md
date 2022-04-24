@@ -1,5 +1,8 @@
 # Change Log
 
+## v1.5.0
+- Transferred ownership to [maxcutlyp](https://github.com/maxcutlyp)
+
 ## v1.4.0
 - Migrated to TypeScript
 
