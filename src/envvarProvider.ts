@@ -12,7 +12,7 @@ const findProjectDir = (fileName: string): string | null => {
     } else {
         return dir === '/' ? null : findProjectDir(dir);
     }
-}
+};
 
 const provider = {
     provideCompletionItems: (document: vscode.TextDocument, position: vscode.Position) => {
@@ -65,6 +65,6 @@ const provider = {
             return completion;
         });
     }
-}
+};
 
 export default provider;
