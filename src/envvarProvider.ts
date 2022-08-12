@@ -25,7 +25,11 @@ const provider = {
 
         console.log('we are there');
 
-        const projectDir = findProjectDir(document.fileName);
+        // Directory path must be normalized for Glob to work on Windows.
+        // See: https://github.com/isaacs/node-glob#windows
+        const projectDir = findProjectDir(document.fileName)
+            ?.split(path.sep)
+            .join('/');
         let envvars = Object.entries(process.env);
 
         if (projectDir) {
