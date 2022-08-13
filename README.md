@@ -22,6 +22,12 @@ Any version of VSCode should do the trick. Let me know if anything goes south wh
 
 ## Settings
 
+- `dotenv-autocomplete.envvarsScope`: Whether to suggest all environment variables or project-scoped ones only.
+  - _Default value is `"all"`._
+  - _Available options:_
+    - _`"all"`_
+    - _`"project"`_
+
 - `dotenv-autocomplete.showEnvvarsValues`: Show values of environment variables in the suggestions widget.
   - _Default value is `false`._
 

@@ -26,6 +26,10 @@ const provider = {
             return undefined;
         }
 
+        const envvarsScope: 'all' | 'project' | undefined = vscode.workspace
+            .getConfiguration('dotenv-autocomplete')
+            .get('envvarsScope');
+
         // Directory path must be normalized for Glob to work on Windows.
         // See: https://github.com/isaacs/node-glob#windows
         const rootDir = path.parse(document.fileName).root;
@@ -33,7 +37,7 @@ const provider = {
             ?.split(path.sep)
             .join('/');
         let envvars: Map<string, string | undefined> = new Map(
-            Object.entries(process.env)
+            envvarsScope === 'project' ? [] : Object.entries(process.env)
         );
 
         if (projectDir) {

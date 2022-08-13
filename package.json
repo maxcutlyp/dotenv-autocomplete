@@ -24,6 +24,15 @@
 		"configuration": {
 			"title": "dotenv-autocomplete",
 			"properties": {
+				"dotenv-autocomplete.envvarsScope": {
+					"type": "string",
+					"default": "all",
+					"enum": [
+						"all",
+						"project"
+					],
+					"description": "Whether to suggest all environment variables or project-scoped ones only."
+				},
 				"dotenv-autocomplete.showEnvvarsValues": {
 					"type": "boolean",
 					"default": false,
