@@ -2,7 +2,7 @@ import * as vscode from 'vscode';
 import * as path from 'path';
 import * as glob from 'fast-glob';
 import * as fs from 'fs';
-import { EOL } from 'os';
+import { parse } from 'dotenv';
 
 const findProjectDir = (rootDir: string, fileName: string): string | null => {
     const dir = path.dirname(fileName);
@@ -51,18 +51,12 @@ const provider = {
                     // globbing and here.
                     return; // out of forEach callback
                 }
-                fileContent
-                    .split(EOL)
-                    // filter out comments
-                    .filter(line => !line.trim().startsWith('#'))
-                    // filter out invalid lines
-                    .filter(line => line.includes('='))
-                    .forEach(envvarLiteral => {
-                        const [key, value] = envvarLiteral.split('=');
-                        if (!envvars.get(key)) {
-                            envvars.set(key, value);
-                        }
-                    });
+                const parsed = parse(fileContent);
+                for (const [key, value] of Object.entries(parsed)) {
+                    if (envvars.get(key) == null) {
+                        envvars.set(key, value);
+                    }
+                }
             });
         }
 
@@ -73,7 +67,7 @@ const provider = {
         return [...envvars].map(envvar => {
             const completion = new vscode.CompletionItem(
                 envvar[0].trim(),
-                vscode.CompletionItemKind.Variable
+                vscode.CompletionItemKind.Field
             );
             if (showEnvvarsValues) {
                 completion.documentation = envvar[1]?.trim();
