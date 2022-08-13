@@ -7,7 +7,7 @@ import { EOL } from 'os';
 const findProjectDir = (rootDir: string, fileName: string): string | null => {
     const dir = path.dirname(fileName);
 
-    if (fs.existsSync(dir + '/package.json')) {
+    if (fs.existsSync(path.join(dir, 'package.json'))) {
         return dir;
     } else {
         return dir === rootDir ? null : findProjectDir(rootDir, dir);
@@ -30,21 +30,16 @@ const provider = {
             .getConfiguration('dotenv-autocomplete')
             .get('envvarsScope');
 
-        // Directory path must be normalized for Glob to work on Windows.
-        // See: https://github.com/isaacs/node-glob#windows
         const rootDir = path.parse(document.fileName).root;
-        const projectDir = findProjectDir(rootDir, document.fileName)
-            ?.split(path.sep)
-            .join('/');
+        const projectDir = findProjectDir(rootDir, document.fileName);
         let envvars: Map<string, string | undefined> = new Map(
             envvarsScope === 'project' ? [] : Object.entries(process.env)
         );
 
         if (projectDir) {
-            const files = await glob(`${projectDir}/**/.env?(.*)`);
-            files.sort(
-                (a, b) => path.basename(a).length - path.basename(b).length
-            );
+            let files = await glob('**/.env?(.*)', { cwd: projectDir });
+            files.sort((a, b) => a.length - b.length);
+            files = files.map(file => path.join(projectDir, file));
 
             files.forEach(file => {
                 let fileContent;
