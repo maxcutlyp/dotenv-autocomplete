@@ -59,7 +59,7 @@ const provider = {
                     .filter(line => line.includes('='))
                     .forEach(envvarLiteral => {
                         const [key, value] = envvarLiteral.split('=');
-                        if (!envvars.has(key)) {
+                        if (!envvars.get(key)) {
                             envvars.set(key, value);
                         }
                     });
