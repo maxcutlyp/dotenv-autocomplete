@@ -31,10 +31,15 @@ const provider = {
         const projectDir = findProjectDir(document.fileName)
             ?.split(path.sep)
             .join('/');
-        let envvars = Object.entries(process.env);
+        let envvars: Map<string, string | undefined> = new Map(
+            Object.entries(process.env)
+        );
 
         if (projectDir) {
             const files = await glob(`${projectDir}/**/.env?(.*)`);
+            files.sort(
+                (a, b) => path.basename(a).length - path.basename(b).length
+            );
 
             files.forEach(file => {
                 let fileContent;
@@ -50,16 +55,18 @@ const provider = {
                     .split(EOL)
                     // filter out comments
                     .filter(line => !line.trim().startsWith('#'))
+                    // filter out invalid lines
+                    .filter(line => line.includes('='))
                     .forEach(envvarLiteral => {
-                        const splitted = envvarLiteral.split('=');
-                        if (splitted.length > 1) {
-                            envvars.push([splitted[0], splitted[1]]);
+                        const [key, value] = envvarLiteral.split('=');
+                        if (!envvars.has(key)) {
+                            envvars.set(key, value);
                         }
                     });
             });
         }
 
-        return envvars.map(envvar => {
+        return [...envvars].map(envvar => {
             const completion = new vscode.CompletionItem(
                 envvar[0].trim(),
                 vscode.CompletionItemKind.Variable
