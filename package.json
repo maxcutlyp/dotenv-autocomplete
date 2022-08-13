@@ -20,6 +20,18 @@
 		"onLanguage:typescriptreact",
 		"onLanguage:javascriptreact"
 	],
+	"contributes": {
+		"configuration": {
+			"title": "dotenv-autocomplete",
+			"properties": {
+				"dotenv-autocomplete.showEnvvarsValues": {
+					"type": "boolean",
+					"default": false,
+					"description": "Show values of environment variables in the suggestions widget."
+				}
+			}
+		}
+	},
 	"main": "./out/extension.js",
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

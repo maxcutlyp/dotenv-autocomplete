@@ -66,12 +66,18 @@ const provider = {
             });
         }
 
+        const showEnvvarsValues: boolean | undefined = vscode.workspace
+            .getConfiguration('dotenv-autocomplete')
+            .get('showEnvvarsValues');
+
         return [...envvars].map(envvar => {
             const completion = new vscode.CompletionItem(
                 envvar[0].trim(),
                 vscode.CompletionItemKind.Variable
             );
-            completion.documentation = envvar[1]?.trim();
+            if (showEnvvarsValues) {
+                completion.documentation = envvar[1]?.trim();
+            }
 
             return completion;
         });
