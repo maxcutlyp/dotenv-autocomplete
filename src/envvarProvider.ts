@@ -54,8 +54,8 @@ const provider = {
                     .split(EOL)
                     // filter out comments
                     .filter(line => !line.trim().startsWith('#'))
-                    .forEach(envvarLitteral => {
-                        const splitted = envvarLitteral.split('=');
+                    .forEach(envvarLiteral => {
+                        const splitted = envvarLiteral.split('=');
                         if (splitted.length > 1) {
                             envvars.push([splitted[0], splitted[1]]);
                         }
