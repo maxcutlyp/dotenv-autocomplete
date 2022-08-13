@@ -19,16 +19,12 @@ const provider = {
         document: vscode.TextDocument,
         position: vscode.Position
     ) => {
-        console.debug('started providing');
-
         const linePrefix = document
             .lineAt(position)
             .text.slice(0, position.character);
         if (!linePrefix.endsWith('process.env.')) {
             return undefined;
         }
-
-        console.log('we are there');
 
         // Directory path must be normalized for Glob to work on Windows.
         // See: https://github.com/isaacs/node-glob#windows
