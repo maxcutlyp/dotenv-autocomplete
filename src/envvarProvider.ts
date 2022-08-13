@@ -41,7 +41,7 @@ const provider = {
             files.sort((a, b) => a.length - b.length);
             files = files.map(file => path.join(projectDir, file));
 
-            files.forEach(file => {
+            for (const file of files) {
                 let fileContent;
                 try {
                     fileContent = fs.readFileSync(file, { encoding: 'utf8' });
@@ -49,7 +49,7 @@ const provider = {
                     // this is usually because the file doesn't exist,
                     // which may occur if the file is deleted between
                     // globbing and here.
-                    return; // out of forEach callback
+                    continue;
                 }
                 const parsed = parse(fileContent);
                 for (const [key, value] of Object.entries(parsed)) {
@@ -57,7 +57,7 @@ const provider = {
                         envvars.set(key, value);
                     }
                 }
-            });
+            }
         }
 
         const showEnvvarsValues: boolean | undefined = vscode.workspace
@@ -70,7 +70,7 @@ const provider = {
                 vscode.CompletionItemKind.Field
             );
             if (showEnvvarsValues) {
-                completion.documentation = envvar[1]?.trim();
+                completion.documentation = envvar[1];
             }
 
             return completion;
