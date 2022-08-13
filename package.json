@@ -30,7 +30,7 @@
 		"test": "node ./out/test/runTest.js"
 	},
 	"dependencies": {
-		"glob": "^8.0.3"
+		"fast-glob": "^3.2.11"
 	},
 	"devDependencies": {
 		"@types/glob": "^7.2.0",

@@ -1,8 +1,8 @@
 import * as vscode from 'vscode';
 import * as path from 'path';
+import * as glob from 'fast-glob';
 import * as fs from 'fs';
 import { EOL } from 'os';
-import { glob } from 'glob';
 
 const findProjectDir = (fileName: string): string | null => {
     const dir = path.dirname(fileName);
@@ -15,10 +15,15 @@ const findProjectDir = (fileName: string): string | null => {
 };
 
 const provider = {
-    provideCompletionItems: (document: vscode.TextDocument, position: vscode.Position) => {
+    provideCompletionItems: async (
+        document: vscode.TextDocument,
+        position: vscode.Position
+    ) => {
         console.debug('started providing');
 
-        const linePrefix = document.lineAt(position).text.slice(0, position.character);
+        const linePrefix = document
+            .lineAt(position)
+            .text.slice(0, position.character);
         if (!linePrefix.endsWith('process.env.')) {
             return undefined;
         }
@@ -33,7 +38,9 @@ const provider = {
         let envvars = Object.entries(process.env);
 
         if (projectDir) {
-            const files = glob.sync(`${projectDir}/**/.env?(.*)`);
+            const files = await glob(`${projectDir}/**/.env?(.*)`, {
+                dot: true,
+            });
 
             files.forEach(file => {
                 let fileContent;
@@ -57,14 +64,17 @@ const provider = {
                     });
             });
         }
-        
+
         return envvars.map(envvar => {
-            const completion = new vscode.CompletionItem(envvar[0].trim(), vscode.CompletionItemKind.Variable);
+            const completion = new vscode.CompletionItem(
+                envvar[0].trim(),
+                vscode.CompletionItemKind.Variable
+            );
             completion.documentation = envvar[1]?.trim();
 
             return completion;
         });
-    }
+    },
 };
 
 export default provider;
