@@ -6,11 +6,12 @@ import { EOL } from 'os';
 
 const findProjectDir = (fileName: string): string | null => {
     const dir = path.dirname(fileName);
+    const root = path.parse(fileName).root;
 
     if (fs.existsSync(dir + '/package.json')) {
         return dir;
     } else {
-        return dir === '/' ? null : findProjectDir(dir);
+        return dir === root ? null : findProjectDir(dir);
     }
 };
 
