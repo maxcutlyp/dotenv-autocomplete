@@ -45,8 +45,8 @@ const provider = {
                 let fileContent;
                 try {
                     fileContent = fs.readFileSync(file, { encoding: 'utf8' });
-                } catch (err) {
-                    // this is usually because the file doesn't exist,
+                } catch {
+                    // This is usually because the file doesn't exist,
                     // which may occur if the file is deleted between
                     // globbing and here.
                     continue;
