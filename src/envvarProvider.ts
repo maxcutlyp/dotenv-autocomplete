@@ -29,12 +29,12 @@ const provider = {
         const envvarsScope: 'all' | 'project' | undefined = vscode.workspace
             .getConfiguration('dotenv-autocomplete')
             .get('envvarsScope');
-
-        const rootDir = path.parse(document.fileName).root;
-        const projectDir = findProjectDir(rootDir, document.fileName);
         let envvars: Map<string, string | undefined> = new Map(
             envvarsScope === 'project' ? [] : Object.entries(process.env)
         );
+
+        const rootDir = path.parse(document.fileName).root;
+        const projectDir = findProjectDir(rootDir, document.fileName);
 
         if (projectDir) {
             let files = await glob('**/.env?(.*)', { cwd: projectDir });
