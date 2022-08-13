@@ -38,9 +38,7 @@ const provider = {
         let envvars = Object.entries(process.env);
 
         if (projectDir) {
-            const files = await glob(`${projectDir}/**/.env?(.*)`, {
-                dot: true,
-            });
+            const files = await glob(`${projectDir}/**/.env?(.*)`);
 
             files.forEach(file => {
                 let fileContent;
