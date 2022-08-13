@@ -20,6 +20,11 @@ Just search for `maxcutlyp.dotenv-autocomplete` in the extensions panel, and cli
 
 Any version of VSCode should do the trick. Let me know if anything goes south while using this extension.
 
+## Settings
+
+- `dotenv-autocomplete.showEnvvarsValues`: Show values of environment variables in the suggestions widget.
+  - _Default value is `false`._
+
 ## Release Notes
 
 See [CHANGELOG.md](CHANGELOG.md)
