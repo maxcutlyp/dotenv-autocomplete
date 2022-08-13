@@ -4,14 +4,13 @@ import * as glob from 'fast-glob';
 import * as fs from 'fs';
 import { EOL } from 'os';
 
-const findProjectDir = (fileName: string): string | null => {
+const findProjectDir = (rootDir: string, fileName: string): string | null => {
     const dir = path.dirname(fileName);
-    const root = path.parse(fileName).root;
 
     if (fs.existsSync(dir + '/package.json')) {
         return dir;
     } else {
-        return dir === root ? null : findProjectDir(dir);
+        return dir === rootDir ? null : findProjectDir(rootDir, dir);
     }
 };
 
@@ -29,7 +28,8 @@ const provider = {
 
         // Directory path must be normalized for Glob to work on Windows.
         // See: https://github.com/isaacs/node-glob#windows
-        const projectDir = findProjectDir(document.fileName)
+        const rootDir = path.parse(document.fileName).root;
+        const projectDir = findProjectDir(rootDir, document.fileName)
             ?.split(path.sep)
             .join('/');
         let envvars: Map<string, string | undefined> = new Map(
