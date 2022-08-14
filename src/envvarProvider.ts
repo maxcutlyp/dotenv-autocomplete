@@ -26,9 +26,9 @@ const provider = {
             return undefined;
         }
 
-        const envvarsScope: 'all' | 'project' | undefined = vscode.workspace
-            .getConfiguration('dotenv-autocomplete')
-            .get('envvarsScope');
+        const config = vscode.workspace.getConfiguration('dotenv-autocomplete');
+
+        const envvarsScope = config.get<'all' | 'project'>('envvarsScope');
         let envvars: Map<string, string | undefined> = new Map(
             envvarsScope === 'project' ? [] : Object.entries(process.env)
         );
@@ -60,9 +60,7 @@ const provider = {
             }
         }
 
-        const showEnvvarsValues: boolean | undefined = vscode.workspace
-            .getConfiguration('dotenv-autocomplete')
-            .get('showEnvvarsValues');
+        const showEnvvarsValues = config.get<boolean>('showEnvvarsValues');
 
         return [...envvars].map(envvar => {
             const completion = new vscode.CompletionItem(
