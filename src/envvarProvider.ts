@@ -14,6 +14,13 @@ const findProjectDir = (rootDir: string, fileName: string): string | null => {
     }
 };
 
+const getDotenvFiles = async (projectDir: string): Promise<string[]> => {
+    const fileNames = await glob('**/.env?(.*)', { cwd: projectDir });
+    fileNames.sort((a, b) => a.length - b.length); // Prioritize .env over other .env.* files
+    const files = fileNames.map(fileName => path.join(projectDir, fileName));
+    return files;
+};
+
 const provider = {
     provideCompletionItems: async (
         document: vscode.TextDocument,
@@ -23,7 +30,7 @@ const provider = {
             .lineAt(position)
             .text.slice(0, position.character);
         if (!linePrefix.endsWith('process.env.')) {
-            return undefined;
+            return;
         }
 
         const config = vscode.workspace.getConfiguration('dotenv-autocomplete');
@@ -37,9 +44,7 @@ const provider = {
         const projectDir = findProjectDir(rootDir, document.fileName);
 
         if (projectDir) {
-            let files = await glob('**/.env?(.*)', { cwd: projectDir });
-            files.sort((a, b) => a.length - b.length);
-            files = files.map(file => path.join(projectDir, file));
+            const files = await getDotenvFiles(projectDir);
 
             for (const file of files) {
                 let fileContent;
